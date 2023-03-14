@@ -1,7 +1,13 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val localProperties = Properties()
+localProperties.load(FileInputStream(rootProject.file("local.properties")))
 
 android {
     namespace = "com.splunk.android.example"
@@ -18,9 +24,16 @@ android {
     }
 
     buildTypes {
-        release {
+        all {
+            val realm = localProperties["rum.realm"] as String?
+            val accessToken = localProperties["rum.access.token"] as String?
+            resValue("string", "rum_realm", realm ?: "us0")
+            resValue("string", "rum_access_token", accessToken ?: "dummyAuth")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        release {
+
         }
     }
     compileOptions {

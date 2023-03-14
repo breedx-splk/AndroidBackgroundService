@@ -13,40 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.splunk.android.example
 
-package com.splunk.android.example;
+import android.app.Application
+import com.splunk.rum.SplunkRum
+import com.splunk.rum.StandardAttributes
+import io.opentelemetry.api.common.Attributes
+import java.time.Duration
 
-import android.app.Application;
-
-import com.splunk.rum.SplunkRum;
-import com.splunk.rum.StandardAttributes;
-
-import java.time.Duration;
-
-import io.opentelemetry.api.common.Attributes;
-
-public class BackgrounderApp extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-//
-//        SplunkRum.builder()
+class BackgrounderApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        //
+        SplunkRum.builder()
 //                // note: for these values to be resolved, put them in your local.properties
 //                // file as rum.beacon.url and rum.access.token
-//                .setRealm(getResources().getString(R.string.rum_realm))
-//                .setApplicationName("Android Demo App")
-//                .setRumAccessToken(getResources().getString(R.string.rum_access_token))
-//                .enableDebug()
-//                .enableDiskBuffering()
-//                .setSlowRenderingDetectionPollInterval(Duration.ofMillis(1000))
-//                .setDeploymentEnvironment("demo")
-//                .limitDiskUsageMegabytes(1)
-//                .setGlobalAttributes(
-//                        Attributes.builder()
-//                                .put("vendor", "Splunk")
-//                                .put(StandardAttributes.APP_VERSION, BuildConfig.VERSION_NAME)
-//                                .build())
-//                .build(this);
+                .setRealm(getResources().getString(R.string.rum_realm))
+                .setApplicationName("BackgrounderApp")
+                .setRumAccessToken(getResources().getString(R.string.rum_access_token))
+                .enableDebug()
+                .enableDiskBuffering()
+                .setSlowRenderingDetectionPollInterval(Duration.ofMillis(1000))
+                .setDeploymentEnvironment("demo")
+                .limitDiskUsageMegabytes(1)
+                .setGlobalAttributes(
+                        Attributes.builder()
+                                .put("vendor", "Splunk")
+                                .put(StandardAttributes.APP_VERSION, BuildConfig.VERSION_NAME)
+                                .build())
+                .build(this);
     }
 }
