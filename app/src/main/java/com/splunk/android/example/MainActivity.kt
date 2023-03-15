@@ -35,22 +35,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Hiya.", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
-        val intent = Intent(this, BackgroundService::class.java)
-        val connection = object : ServiceConnection {
-            override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-                Log.d(LOG_TAG, "Service connected!")
-            }
-
-            override fun onServiceDisconnected(name: ComponentName?) {
-                Log.d(LOG_TAG, "Service connected!")
-            }
-        }
-//            startService(intent)
-        bindService(intent, connection, Context.BIND_AUTO_CREATE)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

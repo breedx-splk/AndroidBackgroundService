@@ -1,8 +1,11 @@
 package com.splunk.android.example
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -40,9 +43,17 @@ class FirstFragment : Fragment() {
         val http = HttpBuddy(splunkRum!!);
         binding.buttonService.setOnClickListener {
             val intent = Intent(context, BackgroundService::class.java)
-//            startService(intent)
+            val connection = object : ServiceConnection {
+                override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+                    Log.d(LOG_TAG, "Service connected!")
+                }
 
-//            activity?.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+                override fun onServiceDisconnected(name: ComponentName?) {
+                    Log.d(LOG_TAG, "Service connected!")
+                }
+            }
+            activity?.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            activity?.startService(intent)
         }
 
         binding.buttonHttp.setOnClickListener {
