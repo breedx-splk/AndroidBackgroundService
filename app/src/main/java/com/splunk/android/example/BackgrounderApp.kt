@@ -16,10 +16,15 @@
 package com.splunk.android.example
 
 import android.app.Application
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.IBinder
 import android.util.Log
 import com.splunk.rum.SplunkRum
 import com.splunk.rum.StandardAttributes
 import io.opentelemetry.api.common.Attributes
+
 
 const val LOG_TAG = "BackgrounderApp"
 
@@ -43,5 +48,7 @@ class BackgrounderApp : Application() {
                     .build()
             )
             .build(this);
+
+//        bindService(Intent())
     }
 }
