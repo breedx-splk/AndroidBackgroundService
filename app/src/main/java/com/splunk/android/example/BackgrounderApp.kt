@@ -16,11 +16,18 @@
 package com.splunk.android.example
 
 import android.app.Application
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.splunk.rum.SplunkRum
 import com.splunk.rum.StandardAttributes
 import io.opentelemetry.api.common.Attributes
@@ -47,8 +54,45 @@ class BackgrounderApp : Application() {
                     .put(StandardAttributes.APP_VERSION, BuildConfig.VERSION_NAME)
                     .build()
             )
-            .build(this);
+            .build(this)
 
-//        bindService(Intent())
+        setUpNotificationChannel()
+    }
+
+    private fun setUpNotificationChannel() {
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(LOG_TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = "Fetched Firebase token: $token"
+            Log.d(LOG_TAG, msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
+
+        /*// Create an Intent for the activity you want to start
+        val resultIntent = Intent(this, OtherRegularActivity::class.java)
+        // Create the TaskStackBuilder
+        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
+            // Add the intent, which inflates the back stack
+            addNextIntentWithParentStack(resultIntent)
+            // Get the PendingIntent containing the entire back stack
+            getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        }
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID).apply {
+            setContentIntent(resultPendingIntent)
+        }
+        with(NotificationManagerCompat.from(this)) {
+            notify(NOTIFICATION_ID, builder.build())
+        }*/
     }
 }
