@@ -47,6 +47,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_first" />
         <Button
+            android:id="@+id/button_job_intent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/startJobIntent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_service" />
+        <Button
             android:id="@+id/button_http"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +63,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_service" />
+            app:layout_constraintTop_toBottomOf="@id/button_job_intent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

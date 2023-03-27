@@ -57,6 +57,13 @@ class FirstFragment : Fragment() {
             activity?.startService(intent)
         }
 
+        binding!!.buttonJobIntent.setOnClickListener {
+            Log.d(LOG_TAG, "Starting job intent service....")
+            val intent = Intent(context, BackgroundJobIntent::class.java)
+            BackgroundJobIntent.enqueueWork(context!!, intent)
+            Log.d(LOG_TAG, "Probably started.")
+        }
+
         binding!!.buttonHttp.setOnClickListener {
             Log.d(LOG_TAG, "Doing a click - pid = ${android.os.Process.myPid()}")
             val workflow: Span = splunkRum!!.startWorkflow("Doing a click")
